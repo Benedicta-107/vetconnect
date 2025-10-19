@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Book an Appointment</h2>
+<form method="post">
+  <div class="form-row">
+    <div class="form-group col-md-4"><input name="pet_name" class="form-control" placeholder="Pet Name" required></div>
+    <div class="form-group col-md-4">
+      <select name="service" class="form-control" required>
+        <option value="" disabled selected>Select Service</option>
+        <option>Consultation</option>
+        <option>Vaccination</option>
+        <option>Grooming</option>
+        <option>Surgery Consultation</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-3"><input name="date" type="date" class="form-control" required></div>
+    <div class="form-group col-md-3"><input name="time" type="time" class="form-control" required></div>
+  </div>
+  <button class="btn btn-success">Submit Request</button>
+</form>
+{% endblock %}

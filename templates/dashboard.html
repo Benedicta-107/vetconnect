@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="jumbotron">
+  <h1 class="display-4">Welcome to VetConnect</h1>
+  <p class="lead">Book appointments, message the clinic, and manage pet care online.</p>
+  <a class="btn btn-primary btn-lg" href="{{ url_for('book') }}">Book an Appointment</a>
+</div>
+
+<h3>Your Appointments</h3>
+
+{% if appts and appts|length %}
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Service</th>
+        <th>Pet</th>
+        <th>Status</th>
+        <th style="width:220px;">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in appts %}
+        <tr>
+          <td>{{ a.date }}</td>
+          <td>{{ a.time }}</td>
+          <td>{{ a.service }}</td>
+          <td>{{ a.pet_name }}</td>
+          <td>
+            <span class="badge badge-{{ 'success' if a.status=='confirmed' else ('secondary' if a.status=='pending' else 'danger') }}">
+              {{ a.status }}
+            </span>
+          </td>
+          <td>
+            <!-- Hide from user -->
+            <form method="post" action="{{ url_for('user_hide_appointment') }}" class="d-inline"
+                  onsubmit="return confirm('Hide this appointment from your list?')">
+              <input type="hidden" name="appt_id" value="{{ a.id }}">
+              <button class="btn btn-sm btn-outline-secondary">Hide</button>
+            </form>
+
+            <!-- Delete permanently (owned by this user) -->
+            <form method="post" action="{{ url_for('user_delete_appointment') }}" class="d-inline ml-1"
+                  onsubmit="return confirm('Delete this appointment permanently?')">
+              <input type="hidden" name="appt_id" value="{{ a.id }}">
+              <button class="btn btn-sm btn-danger">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <div class="alert alert-info">No appointments yet. Book your first one!</div>
+{% endif %}
+
+{% endblock %}

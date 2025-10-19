@@ -1,0 +1,457 @@
+{% extends "layout.html" %}
+{% block content %}
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                        <span class="text-2xl">🐾</span>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold">Peaceland Veterinary Services</h1>
+                        <p class="text-green-100 text-sm">Complete Pet Care Solutions</p>
+                    </div>
+                </div>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#home" class="hover:text-green-200 transition-colors">Home</a>
+                    <a href="#services" class="hover:text-green-200 transition-colors">Services</a>
+                    <a href="#about" class="hover:text-green-200 transition-colors">About</a>
+                    <a href="#contact" class="hover:text-green-200 transition-colors">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="bg-gradient-to-r from-green-50 to-blue-50 py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-5xl font-bold text-gray-800 mb-6">Your Pet's Health is Our Priority</h2>
+            <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                Professional veterinary care, pet supplies, and expert consultation services in Umuahia.
+                We provide comprehensive healthcare solutions for your beloved pets and livestock.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="openBookingModal()" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
+                    <a href="{{ url_for('book') }}" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors inline-block">
+                        Book Appointment
+                    </a>
+                </button>
+                <button onclick="scrollToServices()" class="border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white px-8 py-3 rounded-lg font-semibold transition-colors">
+                    Our Services
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Our Services</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    We offer comprehensive veterinary services to keep your pets healthy and happy
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Veterinary Clinic -->
+                <div class="service-card bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                        <span class="text-3xl">🏥</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Veterinary Clinic</h3>
+                    <p class="text-gray-600 mb-4">
+                        Complete medical care including check-ups, vaccinations, surgery, and emergency treatment for all pets.
+                    </p>
+                    <button onclick="openBookingModal('clinic')" class="text-green-600 hover:text-green-700 font-semibold">
+                        Book Consultation →
+                    </button>
+                </div>
+
+                <!-- Pet Shop -->
+                <div class="service-card bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                        <span class="text-3xl">🛍️</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Pet Shop</h3>
+                    <p class="text-gray-600 mb-4">
+                        Quality pet food, toys, accessories, and supplies for dogs, cats, birds, and other pets.
+                    </p>
+                    <button onclick="openBookingModal('shop')" class="text-green-600 hover:text-green-700 font-semibold">
+                        Visit Shop →
+                    </button>
+                </div>
+
+                <!-- Farm Consultation -->
+                <div class="service-card bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+                    <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-4">
+                        <span class="text-3xl">🚜</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Farm Consultation</h3>
+                    <p class="text-gray-600 mb-4">
+                        Expert advice on livestock health, breeding programs, and farm management practices.
+                    </p>
+                    <button onclick="openBookingModal('farm')" class="text-green-600 hover:text-green-700 font-semibold">
+                        Schedule Visit →
+                    </button>
+                </div>
+
+                <!-- Dog Training & Sales -->
+                <div class="service-card bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-4">
+                        <span class="text-3xl">🐕</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Pure-bred Dogs</h3>
+                    <p class="text-gray-600 mb-4">
+                        Sales and professional training of pure-bred dogs with health certificates and pedigree documentation.
+                    </p>
+                    <button onclick="openBookingModal('dogs')" class="text-green-600 hover:text-green-700 font-semibold">
+                        View Available →
+                    </button>
+                </div>
+
+                <!-- Veterinary Pharmacy -->
+                <div class="service-card bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                        <span class="text-3xl">💊</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Veterinary Pharmacy</h3>
+                    <p class="text-gray-600 mb-4">
+                        Prescription medications, supplements, and specialized treatments for all animal health needs.
+                    </p>
+                    <button onclick="openBookingModal('pharmacy')" class="text-green-600 hover:text-green-700 font-semibold">
+                        Get Prescription →
+                    </button>
+                </div>
+
+                <!-- Emergency Care -->
+                <div class="service-card bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+                    <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-4">
+                        <span class="text-3xl">🚨</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Emergency Care</h3>
+                    <p class="text-gray-600 mb-4">
+                        24/7 emergency veterinary services for urgent medical situations and critical care.
+                    </p>
+                    <button onclick="openBookingModal('emergency')" class="text-green-600 hover:text-green-700 font-semibold">
+                        Emergency Contact →
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl font-bold text-gray-800 mb-8">About Peaceland Veterinary Services</h2>
+                <p class="text-lg text-gray-600 mb-8">
+                    With years of experience in veterinary medicine, we are committed to providing the highest quality care
+                    for your pets and livestock. Our team of qualified veterinarians and support staff work tirelessly to
+                    ensure the health and wellbeing of all animals in our care.
+                </p>
+                <div class="grid md:grid-cols-3 gap-8 mt-12">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">👨‍⚕️</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-2">Expert Veterinarians</h3>
+                        <p class="text-gray-600">Qualified and experienced professionals</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">🏆</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-2">Quality Care</h3>
+                        <p class="text-gray-600">State-of-the-art equipment and facilities</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl">❤️</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-2">Compassionate Service</h3>
+                        <p class="text-gray-600">We treat every pet like family</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold text-gray-800 mb-4">Contact Us</h2>
+                    <p class="text-gray-600">Get in touch for appointments, consultations, or emergency care</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12">
+                    <!-- Contact Information -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Get In Touch</h3>
+
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mt-1">
+                                    <span class="text-sm">📍</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Address</h4>
+                                    <p class="text-gray-600">St Finbars Road, Opp, Abia Hotel<br>Umuahia Abia State</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-3">
+                                <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mt-1">
+                                    <span class="text-sm">📞</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Phone</h4>
+                                    <p class="text-gray-600">+234 XXX XXX XXXX<br>+234 XXX XXX XXXX</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-3">
+                                <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mt-1">
+                                    <span class="text-sm">⏰</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Hours</h4>
+                                    <p class="text-gray-600">Mon-Fri: 8:00 AM - 6:00 PM<br>Sat: 9:00 AM - 4:00 PM<br>Sun: Emergency Only</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Send Message</h3>
+                        <form method="post" action="{{ url_for('contact') }}" class="space-y-4">
+                            <div>
+                                <input type="text" name="name" id="name" required
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                       placeholder="Your Name">
+                            </div>
+                            <div>
+                                <input type="email" name="email" id="email" required
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                       placeholder="Your Email">
+                            </div>
+                            <div>
+                                <input type="tel" id="phone"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                       placeholder="Your Phone">
+                            </div>
+                            <div>
+                                <select id="service" name="service" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                                    <option value="">Select Service</option>
+                                    <option value="clinic">Veterinary Clinic</option>
+                                    <option value="shop">Pet Shop</option>
+                                    <option value="farm">Farm Consultation</option>
+                                    <option value="dogs">Pure-bred Dogs</option>
+                                    <option value="pharmacy">Veterinary Pharmacy</option>
+                                    <option value="emergency">Emergency Care</option>
+                                </select>
+                            </div>
+                            <div>
+                                <textarea name="message" id="message" rows="4" required
+                                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                          placeholder="Your Message"></textarea>
+                            </div>
+                            <button type="submit"
+                                    class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold transition-colors">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="gradient-bg text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                            <span class="text-xl">🐾</span>
+                        </div>
+                        <h3 class="text-xl font-bold">Peaceland Veterinary Services</h3>
+                    </div>
+                    <p class="text-green-100">
+                        Your trusted partner in pet and livestock healthcare in Umuahia, Abia State.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-green-100">
+                        <li><a href="#home" class="hover:text-white transition-colors">Home</a></li>
+                        <li><a href="#services" class="hover:text-white transition-colors">Services</a></li>
+                        <li><a href="#about" class="hover:text-white transition-colors">About</a></li>
+                        <li><a href="#contact" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Emergency Contact</h4>
+                    <p class="text-green-100 mb-2">24/7 Emergency Line:</p>
+                    <p class="text-xl font-bold">+234 XXX XXX XXXX</p>
+                </div>
+            </div>
+
+            <div class="border-t border-green-400 mt-8 pt-8 text-center text-green-100">
+                <p>&copy; 2024 Peaceland Veterinary Services. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">Book Appointment</h3>
+                <button onclick="closeBookingModal()" class="text-gray-500 hover:text-gray-700">
+                    <span class="text-2xl">&times;</span>
+                </button>
+            </div>
+
+            <form onsubmit="submitBooking(event)" class="space-y-4">
+                <div>
+                    <input type="text" id="bookingName" required
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                           placeholder="Pet Owner Name">
+                </div>
+                <div>
+                    <input type="tel" id="bookingPhone" required
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                           placeholder="Phone Number">
+                </div>
+                <div>
+                    <input type="text" id="petName"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                           placeholder="Pet Name (if applicable)">
+                </div>
+                <div>
+                    <select id="bookingService" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        <option value="">Select Service</option>
+                        <option value="clinic">Veterinary Clinic</option>
+                        <option value="shop">Pet Shop Visit</option>
+                        <option value="farm">Farm Consultation</option>
+                        <option value="dogs">Pure-bred Dogs</option>
+                        <option value="pharmacy">Veterinary Pharmacy</option>
+                        <option value="emergency">Emergency Care</option>
+                    </select>
+                </div>
+                <div>
+                    <input type="date" id="bookingDate" required
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                </div>
+                <div>
+                    <textarea id="bookingNotes" rows="3"
+                              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                              placeholder="Additional notes or concerns"></textarea>
+                </div>
+                <button type="submit"
+                        class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold transition-colors">
+                    Book Appointment
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- AI Chatbot -->
+    <div class="chatbot-container">
+        <!-- Chat Toggle Button -->
+        <button id="chatToggle" onclick="toggleChat()"
+                class="bg-green-600 hover:bg-green-700 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg transition-colors">
+            <span class="text-2xl">💬</span>
+        </button>
+
+        <!-- Chat Window -->
+        <div id="chatWindow" class="hidden bg-white rounded-xl shadow-2xl w-80 h-96 flex flex-col mb-4">
+            <!-- Chat Header -->
+            <div class="gradient-bg text-white p-4 rounded-t-xl">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h4 class="font-bold">Peaceland AI Assistant</h4>
+                        <p class="text-sm text-green-100">Online now</p>
+                    </div>
+                    <button onclick="toggleChat()" class="text-white hover:text-green-200">
+                        <span class="text-xl">&times;</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chat Messages -->
+            <div id="chatMessages" class="chat-messages flex-1 p-4 space-y-3">
+                <div class="bg-gray-100 rounded-lg p-3 max-w-xs">
+                    <p class="text-sm">Hi! I'm your AI assistant. I can help with:</p>
+                    <ul class="text-xs mt-2 space-y-1">
+                        <li>• Booking appointments</li>
+                        <li>• Service information</li>
+                        <li>• Emergency guidance</li>
+                        <li>• General questions</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Typing Indicator -->
+            <div id="typingIndicator" class="typing-indicator px-4 pb-2">
+                <div class="bg-gray-100 rounded-lg p-3 max-w-xs">
+                    <div class="flex space-x-1">
+                        <div class="w-2 h-2 bg-gray-400 rounded-full dot"></div>
+                        <div class="w-2 h-2 bg-gray-400 rounded-full dot"></div>
+                        <div class="w-2 h-2 bg-gray-400 rounded-full dot"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Input -->
+            <div class="p-4 border-t">
+                <form onsubmit="sendMessage(event)" class="flex space-x-2">
+                    <input type="text" id="chatInput" required
+                           class="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                           placeholder="Type your message...">
+                    <button type="submit"
+                            class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm transition-colors">
+                        Send
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% if session.get('user_id') %}
+  <section class="py-12 bg-white">
+    <div class="container mx-auto px-4">
+      <h3 class="text-2xl font-bold mb-4">Your next appointments</h3>
+      <div class="space-y-2">
+        {% for a in appts %}
+          <div class="p-4 border rounded-lg flex justify-between">
+            <div>
+              <div class="font-semibold">{{ a.date }} {{ a.time }}</div>
+              <div class="text-sm text-gray-600">{{ a.service }} — {{ a.pet_name }}</div>
+            </div>
+            <span class="text-sm px-2 py-1 rounded
+              {{ 'bg-green-100 text-green-700' if a.status=='confirmed' else 'bg-gray-100 text-gray-700' }}">
+              {{ a.status }}
+            </span>
+          </div>
+        {% else %}
+          <div class="text-gray-500">No upcoming appointments yet.</div>
+        {% endfor %}
+      </div>
+      <div class="mt-4">
+        <a href="{{ url_for('dashboard') }}" class="inline-block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
+          Go to Dashboard
+        </a>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+{% endblock %}

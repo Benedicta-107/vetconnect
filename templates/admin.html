@@ -1,0 +1,117 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2 class="mb-4">Admin Panel</h2>
+
+<form method="get" class="form-inline mb-3">
+  <input class="form-control mr-2" type="date" name="from" value="{{ request.args.get('from', '') }}">
+  <input class="form-control mr-2" type="date" name="to"   value="{{ request.args.get('to', '') }}">
+  <select class="form-control mr-2" name="status">
+    <option value="">Any status</option>
+    <option value="pending"   {{ 'selected' if request.args.get('status')=='pending' else '' }}>Pending</option>
+    <option value="confirmed" {{ 'selected' if request.args.get('status')=='confirmed' else '' }}>Confirmed</option>
+    <option value="cancelled" {{ 'selected' if request.args.get('status')=='cancelled' else '' }}>Cancelled</option>
+  </select>
+  <select class="form-control mr-2" name="service">
+    <option value="">Any service</option>
+    {% for s in ['clinic','vaccination','consultation','pharmacy','dogs','farm','emergency'] %}
+      <option value="{{ s }}" {{ 'selected' if request.args.get('service')==s else '' }}>{{ s|capitalize }}</option>
+    {% endfor %}
+  </select>
+  <input class="form-control mr-2" name="owner" placeholder="Owner name/email" value="{{ request.args.get('owner','') }}">
+  <button class="btn btn-secondary">Filter</button>
+</form>
+
+<h4 class="mt-4">Appointments</h4>
+<table class="table table-striped table-sm">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Service</th>
+      <th>Pet</th>
+      <th>Owner</th>
+      <th>Status</th>
+      <th style="width: 320px;">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if appts and appts|length %}
+      {% for a in appts %}
+        <tr>
+          <td>{{ a.id }}</td>
+          <td>{{ a.date }}</td>
+          <td>{{ a.time }}</td>
+          <td>{{ a.service }}</td>
+          <td>{{ a.pet_name }}</td>
+          <td>{{ a.user.name }} ({{ a.user.email }})</td>
+          <td>
+            <span class="badge badge-{{ 'success' if a.status=='confirmed' else ('secondary' if a.status=='pending' else 'danger') }}">
+              {{ a.status }}
+            </span>
+          </td>
+          <td>
+            <!-- Approve -->
+            <form method="post" action="{{ url_for('admin') }}" class="d-inline">
+              <input type="hidden" name="appt_id" value="{{ a.id }}">
+              <input type="hidden" name="action" value="confirm">
+              <button class="btn btn-sm btn-success" {{ 'disabled' if a.status=='confirmed' }}>Approve</button>
+            </form>
+
+            <!-- Cancel -->
+            <form method="post" action="{{ url_for('admin') }}" class="d-inline ml-1">
+              <input type="hidden" name="appt_id" value="{{ a.id }}">
+              <input type="hidden" name="action" value="cancel">
+              <button class="btn btn-sm btn-outline-danger" {{ 'disabled' if a.status=='cancelled' }}>Cancel</button>
+            </form>
+
+            <!-- Archive (soft-delete) -->
+            <form method="post" action="{{ url_for('admin_archive_appointment') }}" class="d-inline ml-1"
+                  onsubmit="return confirm('Archive this appointment?')">
+              <input type="hidden" name="appt_id" value="{{ a.id }}">
+              <button class="btn btn-sm btn-outline-secondary">Archive</button>
+            </form>
+
+            <!-- Delete (hard-delete) -->
+            <form method="post" action="{{ url_for('admin_delete_appointment') }}" class="d-inline ml-1"
+                  onsubmit="return confirm('Delete this appointment permanently?')">
+              <input type="hidden" name="appt_id" value="{{ a.id }}">
+              <button class="btn btn-sm btn-danger">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    {% else %}
+      <tr><td colspan="8" class="text-muted">No appointments yet.</td></tr>
+    {% endif %}
+  </tbody>
+</table>
+
+<h4 class="mt-5">Messages</h4>
+<table class="table table-sm">
+  <thead class="thead-light">
+    <tr>
+      <th>#</th>
+      <th>From</th>
+      <th>Email</th>
+      <th>Message</th>
+      <th>Submitted</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if msgs and msgs|length %}
+      {% for m in msgs %}
+        <tr>
+          <td>{{ m.id }}</td>
+          <td>{{ m.name }}</td>
+          <td>{{ m.email }}</td>
+          <td>{{ m.message }}</td>
+          <td>{{ m.submitted_at }}</td>
+        </tr>
+      {% endfor %}
+    {% else %}
+      <tr><td colspan="5" class="text-muted">No messages yet.</td></tr>
+    {% endif %}
+  </tbody>
+</table>
+{% endblock %}
